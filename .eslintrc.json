@@ -1,3 +1,40 @@
 {
-  "extends": "next/core-web-vitals"
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    // Handled by import/typescript
+    "node/no-missing-import": "off",
+
+    // Conflicts with TypeScript
+    "node/no-unsupported-features/es-syntax": [
+      "error",
+      { "ignores": ["modules"] }
+    ],
+
+    // No components inside components
+    "react/no-unstable-nested-components": "warn",
+
+    // Enable additional import rules
+    "import/no-dynamic-require": "error",
+    "import/no-absolute-path": "error",
+    "import/no-useless-path-segments": "warn",
+    "import/newline-after-import": "warn",
+
+    // Use warn instead of error for prettier issues and some rules
+    "prettier/prettier": "warn",
+    "no-unused-vars": "warn",
+    "prefer-const": "warn",
+    "no-console": "warn"
+  }
 }
