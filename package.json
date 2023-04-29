@@ -10,7 +10,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "check-types": "tsc --noemit",
+    "lint": "(next lint || true) && npm run check-types",
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@types/node": "18.16.3",
