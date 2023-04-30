@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .default-border {
+    @apply rounded-md border border-solid border-primary;
+  }
+}
