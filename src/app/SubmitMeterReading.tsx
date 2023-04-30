@@ -7,6 +7,7 @@ import infoImg from '@/images/info.svg';
 
 export const SubmitMeterReading: FC = () => {
   const [currentReading, setCurrentReading] = useState<string>('');
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const { error, readingAsNumber } = validateReading(currentReading);
 
@@ -17,8 +18,9 @@ export const SubmitMeterReading: FC = () => {
         <div>Nykyinen lukema</div>
         <div>
           <input
-            className="h-10 w-20 rounded-md border border-solid border-[#274A61] bg-[#F5F5F5] p-2 text-right"
+            className="default-border h-10 w-20 bg-neutral-100 p-2 text-right"
             placeholder="0"
+            inputMode="numeric"
             value={currentReading}
             onChange={(event) => setCurrentReading(event.target.value)}
           />
@@ -28,13 +30,18 @@ export const SubmitMeterReading: FC = () => {
         </div>
         <div>
           Edellinen lukema
-          <Image
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            src={infoImg}
-            alt="Lisätietoa"
-            className="ml-2 inline-block"
-            priority
-          />
+          <button
+            className="p-2"
+            onClick={() => setShowInfoModal((showInfoModal) => !showInfoModal)}
+          >
+            <Image
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              src={infoImg}
+              alt="Lisätietoa"
+              className="inline-block"
+              priority
+            />
+          </button>
         </div>
         <div className="px-2 text-right">3316</div>
         <div>
@@ -42,9 +49,13 @@ export const SubmitMeterReading: FC = () => {
         </div>
       </div>
       <div className="mt-8">
-        <Button disabled={error != null || readingAsNumber == null}>
-          Laske kulutus ja muodosta lasku
-        </Button>
+        {showInfoModal ? (
+          <InfoModal closeModal={() => setShowInfoModal(false)} />
+        ) : (
+          <Button disabled={error != null || readingAsNumber == null}>
+            Laske kulutus ja muodosta lasku
+          </Button>
+        )}
       </div>
     </>
   );
@@ -54,6 +65,22 @@ const ErrorText: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div className="col-span-3 self-end text-right text-red-500">
       {children}
+    </div>
+  );
+};
+
+const InfoModal: FC<{ closeModal: () => void }> = ({ closeModal }) => {
+  return (
+    <div className="default-border ali flex flex-col gap-8 bg-neutral-100 px-11 py-5">
+      <div>
+        Lukema on edellisenä vuonna vesiosuuskunnalle ilmoittamasi vesimittarin
+        lukema.
+      </div>
+      <div className="text-center">
+        <Button className="px-8 py-2" onClick={closeModal}>
+          Sulje
+        </Button>
+      </div>
     </div>
   );
 };
