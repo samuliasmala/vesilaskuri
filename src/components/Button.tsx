@@ -10,7 +10,7 @@ export const Button: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
     <button
       {...props}
       className={twMerge(
-        'rounded-md bg-[#274A61] p-5 font-bold text-white disabled:bg-[#274A619E]',
+        'rounded-md bg-primary p-5 font-bold text-white disabled:opacity-60',
         className
       )}
     >
