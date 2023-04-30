@@ -3,7 +3,7 @@
 import React, { FC, ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/Button';
-import infoImg from '~/images/info.svg';
+import infoImg from '@/images/info.svg';
 
 export const SubmitMeterReading: FC = () => {
   const [currentReading, setCurrentReading] = useState<string>('');
