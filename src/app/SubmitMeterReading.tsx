@@ -55,6 +55,7 @@ export const SubmitMeterReading: FC = () => {
           <Button
             className="p-5"
             disabled={error != null || readingAsNumber == null}
+            href="/lasku"
           >
             Laske kulutus ja muodosta lasku
           </Button>
