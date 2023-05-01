@@ -12,6 +12,7 @@ export const InvoiceContent: FC = () => {
 
   const prev = parseFloat(searchParams.get('edellinen') ?? '');
   const current = parseFloat(searchParams.get('uusi') ?? '');
+  const reference = searchParams.get('viite') ?? '';
 
   const usage = round(current - prev);
   const waterPrice = round(usage * WATER_EUR_PER_M3, 2);
@@ -21,7 +22,7 @@ export const InvoiceContent: FC = () => {
     <>
       <Usage prev={prev} current={current} usage={usage} />
       <Pricing usage={usage} waterPrice={waterPrice} totalPrice={totalPrice} />
-      <InvoiceDetails totalPrice={totalPrice} />
+      <InvoiceDetails totalPrice={totalPrice} reference={reference} />
     </>
   );
 };

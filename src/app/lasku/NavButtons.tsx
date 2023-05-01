@@ -10,6 +10,7 @@ export const NavButtons: FC = () => {
   const backUrl = getUrl('/', {
     edellinen: searchParams.get('edellinen') ?? '',
     uusi: searchParams.get('uusi') ?? '',
+    viite: searchParams.get('viite') ?? '',
   });
 
   return (

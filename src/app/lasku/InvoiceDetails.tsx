@@ -6,7 +6,10 @@ import { Modal } from '@/components/Modal';
 import { H2 } from '@/components/Typography';
 import { ACCOUNT_NUMBER, DUE_DATE, INVOICE_RECEIVER } from '@/constants';
 
-export const InvoiceDetails: FC<{ totalPrice: number }> = ({ totalPrice }) => {
+export const InvoiceDetails: FC<{ totalPrice: number; reference: string }> = ({
+  totalPrice,
+  reference,
+}) => {
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   return (
     <div>
@@ -24,7 +27,7 @@ export const InvoiceDetails: FC<{ totalPrice: number }> = ({ totalPrice }) => {
         <div>Eräpäivä</div>
         <div>{DUE_DATE.toLocaleDateString('fi')}</div>
         <div>Viite</div>
-        <div>{}</div>
+        <div>{reference}</div>
         <div>Virtuaali­viivakoodi</div>
         <div>{}</div>
       </div>

@@ -22,6 +22,7 @@ export const SubmitMeterReading: FC = () => {
   const invoiceUrl = getUrl('/lasku', {
     edellinen: previousReading,
     uusi: readingAsNumber?.toString() ?? '0',
+    viite: searchParams.get('viite') ?? '',
   });
 
   return (
