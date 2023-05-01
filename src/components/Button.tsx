@@ -1,12 +1,18 @@
 import React, { FC } from 'react';
+import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
-export const Button: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: string;
+}
+
+export const Button: FC<ButtonProps> = ({
   children,
   className,
+  href,
   ...props
 }) => {
-  return (
+  const button = (
     <button
       {...props}
       className={twMerge(
@@ -17,4 +23,8 @@ export const Button: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
       {children}
     </button>
   );
+
+  if (href && !props.disabled) return <Link href={href}>{button}</Link>;
+
+  return button;
 };
