@@ -16,7 +16,7 @@ export const Header: FC = () => {
         />
         Pinsiön alueen vesiosuuskunta
       </div>
-      <div className="relative h-[25vh] w-full">
+      <div className="relative h-[25vh] w-full print:hidden">
         <Image
           src={pipesImg}
           alt="Putkikuva"
