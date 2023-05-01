@@ -24,7 +24,7 @@ export const Header: FC = () => {
           className="object-cover"
           priority
         />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-white">
+        <div className="absolute left-1/2 top-1/4 -translate-x-1/2 text-4xl font-bold text-white">
           Vesilaskuri
         </div>
       </div>
