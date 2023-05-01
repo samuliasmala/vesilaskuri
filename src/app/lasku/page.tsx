@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
+
 import { Header } from '@/app/Header';
-import { Button } from '@/components/Button';
+import { NavButtons } from './NavButtons';
 
 export default function Invoice() {
   return (
@@ -12,12 +13,3 @@ export default function Invoice() {
     </div>
   );
 }
-
-const NavButtons: FC = () => (
-  <div className="flex justify-between">
-    <Button className="py-1" href="/">
-      Takaisin
-    </Button>
-    <Button className="py-1">Tulosta tai tallenna</Button>
-  </div>
-);

@@ -1,19 +1,27 @@
 'use client';
-
 import React, { FC, ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
 import { Button } from '@/components/Button';
 import infoImg from '@/images/info.svg';
+import { getUrl } from '@/utils/getUrl';
 
 export const SubmitMeterReading: FC = () => {
   const searchParams = useSearchParams();
-  const [currentReading, setCurrentReading] = useState<string>('');
+  const [currentReading, setCurrentReading] = useState<string>(
+    searchParams.get('uusi') || ''
+  );
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   const previousReading = searchParams.get('edellinen') || '0';
   const { error, readingAsNumber } = validateReading(currentReading);
+
+  // Create invoice url with query parameters holding input data
+  const invoiceUrl = getUrl('/lasku', {
+    edellinen: previousReading,
+    uusi: readingAsNumber?.toString() ?? '0',
+  });
 
   return (
     <>
@@ -58,7 +66,7 @@ export const SubmitMeterReading: FC = () => {
           <Button
             className="p-5"
             disabled={error != null || readingAsNumber == null}
-            href="/lasku"
+            href={invoiceUrl}
           >
             Laske kulutus ja muodosta lasku
           </Button>
