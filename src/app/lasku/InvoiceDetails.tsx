@@ -53,7 +53,7 @@ export const InvoiceDetails: FC<{ totalPrice: number; reference: string }> = ({
         <div>Virtuaali­viivakoodi</div>
         <div className="break-all">{barcode}</div>
       </div>
-      <div className="mt-10">
+      <div className="mt-10 print:hidden">
         <Button
           className="w-full max-w-xs p-5"
           onClick={() => {

@@ -11,7 +11,7 @@ export default function Invoice() {
       <main className="flex flex-col gap-10 p-8">
         <NavButtons />
         <InvoiceContent />
-        <div>
+        <div className="print:hidden">
           Voit laittaa laskurista palautetta osoitteeseen samuli@samcode.fi
         </div>
       </main>
