@@ -5,12 +5,28 @@ import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { H2 } from '@/components/Typography';
 import { ACCOUNT_NUMBER, DUE_DATE, INVOICE_RECEIVER } from '@/constants';
+import { calculateVirtualBarcode } from '@/utils/barcode';
 
 export const InvoiceDetails: FC<{ totalPrice: number; reference: string }> = ({
   totalPrice,
   reference,
 }) => {
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
+
+  let barcode: string;
+  try {
+    barcode = calculateVirtualBarcode({
+      account: ACCOUNT_NUMBER,
+      price: totalPrice,
+      reference,
+      dueDate: DUE_DATE,
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    barcode = 'Viivakoodia ei voitu laskea';
+  }
+
   return (
     <div>
       {showBarcodeModal && (
@@ -29,12 +45,15 @@ export const InvoiceDetails: FC<{ totalPrice: number; reference: string }> = ({
         <div>Viite</div>
         <div>{reference}</div>
         <div>Virtuaali­viivakoodi</div>
-        <div>{}</div>
+        <div className="break-all">{barcode}</div>
       </div>
       <div className="mt-10">
         <Button
           className="w-full max-w-xs p-5"
-          onClick={() => setShowBarcodeModal(true)}
+          onClick={() => {
+            void navigator?.clipboard?.writeText(barcode);
+            setShowBarcodeModal(true);
+          }}
         >
           Kopioi viivakoodi
         </Button>
