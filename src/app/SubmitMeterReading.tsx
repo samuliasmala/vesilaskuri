@@ -2,13 +2,17 @@
 
 import React, { FC, ReactNode, useState } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+
 import { Button } from '@/components/Button';
 import infoImg from '@/images/info.svg';
 
 export const SubmitMeterReading: FC = () => {
+  const searchParams = useSearchParams();
   const [currentReading, setCurrentReading] = useState<string>('');
   const [showInfoModal, setShowInfoModal] = useState(false);
 
+  const previousReading = searchParams.get('edellinen') || '0';
   const { error, readingAsNumber } = validateReading(currentReading);
 
   return (
@@ -42,7 +46,7 @@ export const SubmitMeterReading: FC = () => {
             />
           </button>
         </div>
-        <div className="px-2 text-right">3316</div>
+        <div className="px-2 text-right">{previousReading}</div>
         <div>
           m<sup>3</sup>
         </div>
