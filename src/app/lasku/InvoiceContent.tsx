@@ -65,7 +65,10 @@ export const Pricing: FC<{
       <div className="grid max-w-md grid-cols-[minmax(min-content,1fr)_max-content_max-content] items-center gap-1">
         <div className="font-medium">Veden hinta</div>
         <div className="text-right font-medium">
-          {waterPrice.toLocaleString('fi')}
+          {waterPrice.toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </div>
         <div className="font-medium">€</div>
 
@@ -79,7 +82,10 @@ export const Pricing: FC<{
 
         <div className="font-medium">Perusmaksu</div>
         <div className="text-right font-medium">
-          {YEARLY_FEE.toLocaleString('fi')}
+          {YEARLY_FEE.toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </div>
         <div className="font-medium">€</div>
 
@@ -87,7 +93,10 @@ export const Pricing: FC<{
 
         <div className="font-bold">Yhteensä</div>
         <div className="text-right font-bold">
-          {totalPrice.toLocaleString('fi')}
+          {totalPrice.toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </div>
         <div className="font-bold">€</div>
       </div>

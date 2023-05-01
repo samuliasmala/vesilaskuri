@@ -39,7 +39,13 @@ export const InvoiceDetails: FC<{ totalPrice: number; reference: string }> = ({
         <div>Tilinumero</div>
         <div>{ACCOUNT_NUMBER}</div>
         <div>Summa</div>
-        <div>{totalPrice.toLocaleString('fi')} €</div>
+        <div>
+          {totalPrice.toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}{' '}
+          €
+        </div>
         <div>Eräpäivä</div>
         <div>{DUE_DATE.toLocaleDateString('fi')}</div>
         <div>Viite</div>
