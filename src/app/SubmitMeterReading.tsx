@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/Button';
 import infoImg from '@/images/info.svg';
 import { getUrl } from '@/utils/getUrl';
+import { M3 } from '@/components/M3';
 
 export const SubmitMeterReading: FC = () => {
   const searchParams = useSearchParams();
@@ -36,9 +37,7 @@ export const SubmitMeterReading: FC = () => {
           value={currentReading}
           onChange={(event) => setCurrentReading(event.target.value)}
         />
-        <div>
-          m<sup>3</sup>
-        </div>
+        <M3 />
         <div>
           Edellinen lukema
           <button
@@ -55,9 +54,7 @@ export const SubmitMeterReading: FC = () => {
           </button>
         </div>
         <div className="px-2 text-right">{previousReading}</div>
-        <div>
-          m<sup>3</sup>
-        </div>
+        <M3 />
       </div>
       <div className="mt-8">
         {showInfoModal ? (
