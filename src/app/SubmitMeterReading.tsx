@@ -52,7 +52,10 @@ export const SubmitMeterReading: FC = () => {
         {showInfoModal ? (
           <InfoModal closeModal={() => setShowInfoModal(false)} />
         ) : (
-          <Button disabled={error != null || readingAsNumber == null}>
+          <Button
+            className="p-5"
+            disabled={error != null || readingAsNumber == null}
+          >
             Laske kulutus ja muodosta lasku
           </Button>
         )}
@@ -77,9 +80,7 @@ const InfoModal: FC<{ closeModal: () => void }> = ({ closeModal }) => {
         lukema.
       </div>
       <div className="text-center">
-        <Button className="px-8 py-2" onClick={closeModal}>
-          Sulje
-        </Button>
+        <Button onClick={closeModal}>Sulje</Button>
       </div>
     </div>
   );
