@@ -15,16 +15,15 @@ export const SubmitMeterReading: FC = () => {
     <>
       <div className="grid max-w-xs grid-cols-[minmax(min-content,1fr)_max-content_max-content] grid-rows-3 items-center gap-4">
         <ErrorText>{error}</ErrorText>
-        <div>Nykyinen lukema</div>
-        <div>
-          <input
-            className="default-border h-10 w-20 bg-neutral-100 p-2 text-right"
-            placeholder="0"
-            inputMode="numeric"
-            value={currentReading}
-            onChange={(event) => setCurrentReading(event.target.value)}
-          />
-        </div>
+        <label htmlFor="currentReading">Nykyinen lukema</label>
+        <input
+          id="currentReading"
+          className="default-border h-10 w-20 bg-neutral-100 p-2 text-right"
+          placeholder="0"
+          inputMode="numeric"
+          value={currentReading}
+          onChange={(event) => setCurrentReading(event.target.value)}
+        />
         <div>
           m<sup>3</sup>
         </div>
