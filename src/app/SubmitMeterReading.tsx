@@ -37,6 +37,7 @@ export const SubmitMeterReading: FC = () => {
           inputMode="numeric"
           value={currentReading}
           onChange={(event) => setCurrentReading(event.target.value)}
+          onKeyDown={(ev) => ev.code === 'Enter' && ev.currentTarget.blur()}
         />
         <M3 />
         <div>
