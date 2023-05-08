@@ -99,6 +99,15 @@ export const Pricing: FC<{
           })}
         </div>
         <div className="font-bold">€</div>
+
+        <div className="col-span-2 text-right">
+          (sis. alv{' '}
+          {(totalPrice * (0.24 / 1.24)).toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </div>
+        <div>€)</div>
       </div>
     </div>
   );
