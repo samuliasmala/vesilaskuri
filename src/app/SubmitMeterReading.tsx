@@ -16,11 +16,12 @@ export const SubmitMeterReading: FC = () => {
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   const previousReading = searchParams.get('edellinen') || '0';
+  const previousReadingAsNumber = Number(previousReading.replaceAll(',', '.'));
   const { error, readingAsNumber } = validateReading(currentReading);
 
   // Create invoice url with query parameters holding input data
   const invoiceUrl = getUrl('/lasku', {
-    edellinen: previousReading,
+    edellinen: previousReadingAsNumber.toString(),
     uusi: readingAsNumber?.toString() ?? '0',
     viite: searchParams.get('viite') ?? '',
   });
@@ -55,7 +56,11 @@ export const SubmitMeterReading: FC = () => {
             />
           </button>
         </div>
-        <div className="px-2 text-right">{previousReading}</div>
+        <div className="px-2 text-right">
+          {previousReadingAsNumber.toLocaleString('fi', {
+            maximumFractionDigits: 2,
+          })}
+        </div>
         <M3 />
       </div>
       <div className="mt-8">
