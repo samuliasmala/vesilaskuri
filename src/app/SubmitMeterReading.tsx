@@ -7,6 +7,7 @@ import { Button } from '@/components/Button';
 import infoImg from '@/images/info.svg';
 import { getUrl } from '@/utils/getUrl';
 import { M3 } from '@/components/M3';
+import { max2digits } from '@/utils/formatters';
 
 export const SubmitMeterReading: FC = () => {
   const searchParams = useSearchParams();
@@ -57,9 +58,7 @@ export const SubmitMeterReading: FC = () => {
           </button>
         </div>
         <div className="px-2 text-right">
-          {previousReadingAsNumber.toLocaleString('fi', {
-            maximumFractionDigits: 2,
-          })}
+          {max2digits(previousReadingAsNumber)}
         </div>
         <M3 />
       </div>
