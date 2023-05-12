@@ -2,6 +2,7 @@
   "name": "vesilaskuri",
   "version": "0.1.0",
   "private": true,
+  "files": [],
   "engines": {
     "node": "^16",
     "npm": ">=7"
