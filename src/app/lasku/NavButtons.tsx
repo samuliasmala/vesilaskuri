@@ -1,8 +1,8 @@
 'use client';
 import React, { FC } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Button } from '@/components/Button';
-import { getUrl } from '@/utils/getUrl';
+import { Button } from '~/components/Button';
+import { getUrl } from '~/utils/getUrl';
 
 export const NavButtons: FC = () => {
   const searchParams = useSearchParams();

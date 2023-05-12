@@ -3,11 +3,11 @@ import React, { FC, ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
-import { Button } from '@/components/Button';
-import infoImg from '@/images/info.svg';
-import { getUrl } from '@/utils/getUrl';
-import { M3 } from '@/components/M3';
-import { max2digits } from '@/utils/formatters';
+import { Button } from '~/components/Button';
+import infoImg from '~/images/info.svg';
+import { getUrl } from '~/utils/getUrl';
+import { M3 } from '~/components/M3';
+import { max2digits } from '~/utils/formatters';
 
 export const SubmitMeterReading: FC = () => {
   const searchParams = useSearchParams();

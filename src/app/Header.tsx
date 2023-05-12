@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Image from 'next/image';
-import pipesImg from '@/images/pipes.png';
-import dropImg from '@/images/water-drop.svg';
+import pipesImg from '~/images/pipes.png';
+import dropImg from '~/images/water-drop.svg';
 
 export const Header: FC = () => {
   return (

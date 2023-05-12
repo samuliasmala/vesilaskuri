@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header } from '@/app/Header';
+import { Header } from '~/app/Header';
 import { NavButtons } from './NavButtons';
 import { InvoiceContent } from './InvoiceContent';
 

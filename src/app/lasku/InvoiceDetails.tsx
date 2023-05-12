@@ -1,12 +1,12 @@
 'use client';
 
 import React, { FC, useState } from 'react';
-import { Button } from '@/components/Button';
-import { Modal } from '@/components/Modal';
-import { H2 } from '@/components/Typography';
-import { ACCOUNT_NUMBER, DUE_DATE, INVOICE_RECEIVER } from '@/constants';
-import { calculateVirtualBarcode } from '@/utils/barcode';
-import { always2digits } from '@/utils/formatters';
+import { Button } from '~/components/Button';
+import { Modal } from '~/components/Modal';
+import { H2 } from '~/components/Typography';
+import { ACCOUNT_NUMBER, DUE_DATE, INVOICE_RECEIVER } from '~/constants';
+import { calculateVirtualBarcode } from '~/utils/barcode';
+import { always2digits } from '~/utils/formatters';
 
 export const InvoiceDetails: FC<{ totalPrice: number; reference: string }> = ({
   totalPrice,

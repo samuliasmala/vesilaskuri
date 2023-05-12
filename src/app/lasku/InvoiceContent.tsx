@@ -1,11 +1,11 @@
 'use client';
 import { FC } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { H2 } from '@/components/Typography';
-import { M3 } from '@/components/M3';
-import { WATER_EUR_PER_M3, YEARLY_FEE } from '@/constants';
+import { H2 } from '~/components/Typography';
+import { M3 } from '~/components/M3';
+import { WATER_EUR_PER_M3, YEARLY_FEE } from '~/constants';
 import { InvoiceDetails } from './InvoiceDetails';
-import { always2digits, max2digits } from '@/utils/formatters';
+import { always2digits, max2digits } from '~/utils/formatters';
 
 export const InvoiceContent: FC = () => {
   const searchParams = useSearchParams();
