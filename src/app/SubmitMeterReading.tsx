@@ -16,6 +16,11 @@ export const SubmitMeterReading: FC = () => {
   );
   const [showInfoModal, setShowInfoModal] = useState(false);
 
+  // Log app version number to browser console
+  if (typeof window !== 'undefined')
+    // eslint-disable-next-line no-console
+    console.log(`v${process.env.NEXT_PUBLIC_VERSION ?? ''}`);
+
   const previousReading = searchParams.get('edellinen') || '0';
   const previousReadingAsNumber = Number(previousReading.replaceAll(',', '.'));
   const { error, readingAsNumber } = validateReading(currentReading);
