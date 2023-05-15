@@ -21,6 +21,7 @@ export const Header: FC = () => {
           src={pipesImg}
           alt="Putkikuva"
           fill={true}
+          sizes="(max-width: 672px) 100vw, 672px"
           className="object-cover"
           priority
         />
