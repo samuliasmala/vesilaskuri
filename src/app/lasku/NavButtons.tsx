@@ -18,7 +18,7 @@ export const NavButtons: FC = () => {
       <Button className="py-1" href={backUrl}>
         Takaisin
       </Button>
-      <Button className="py-1" onClick={window.print}>
+      <Button className="py-1" onClick={() => window.print()}>
         Tulosta tai tallenna
       </Button>
     </div>
