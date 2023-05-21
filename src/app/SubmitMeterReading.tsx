@@ -28,8 +28,8 @@ export const SubmitMeterReading: FC = () => {
   });
 
   return (
-    <>
-      <div className="grid max-w-xs grid-cols-[minmax(min-content,1fr)_max-content_max-content] grid-rows-3 items-center gap-4">
+    <div className="w-full max-w-xs">
+      <div className="grid max-w-xs grid-cols-[minmax(min-content,1fr)_max-content_max-content] grid-rows-3 items-center gap-x-1 gap-y-4">
         <ErrorText>{error}</ErrorText>
         <label htmlFor="currentReading">Nykyinen lukema</label>
         <input
@@ -45,14 +45,14 @@ export const SubmitMeterReading: FC = () => {
         <div>
           Edellinen lukema
           <button
-            className="p-2"
+            className="p-1"
             onClick={() => setShowInfoModal((showInfoModal) => !showInfoModal)}
           >
             <Image
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               src={infoImg}
               alt="Lisätietoa"
-              className="inline-block"
+              className="relative bottom-[1px] inline-block"
               priority
             />
           </button>
@@ -62,12 +62,12 @@ export const SubmitMeterReading: FC = () => {
         </div>
         <M3 />
       </div>
-      <div className="mt-8">
+      <div className="mt-8 w-full">
         {showInfoModal ? (
           <InfoModal closeModal={() => setShowInfoModal(false)} />
         ) : (
           <Button
-            className="p-5"
+            className="w-full p-5"
             disabled={error != null || readingAsNumber == null}
             href={invoiceUrl}
           >
@@ -75,13 +75,13 @@ export const SubmitMeterReading: FC = () => {
           </Button>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
 const ErrorText: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className="col-span-3 self-end text-right text-red-500">
+    <div className="col-span-3 max-w-xs self-end whitespace-nowrap text-right text-red-500 max-[390px]:-ml-6">
       {children}
     </div>
   );
@@ -89,7 +89,7 @@ const ErrorText: FC<{ children: ReactNode }> = ({ children }) => {
 
 const InfoModal: FC<{ closeModal: () => void }> = ({ closeModal }) => {
   return (
-    <div className="default-border ali flex flex-col gap-8 bg-neutral-100 px-11 py-5">
+    <div className="default-border flex flex-col gap-8 bg-neutral-100 px-8 py-6">
       <div>
         Lukema on edellisenä vuonna vesiosuuskunnalle ilmoittamasi vesimittarin
         lukema.

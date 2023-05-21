@@ -6,12 +6,12 @@ import dropImg from '~/images/water-drop.svg';
 export const Header: FC = () => {
   return (
     <header>
-      <div className="flex items-center p-3">
+      <div className="flex items-center p-3 pl-5">
         <Image
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           src={dropImg}
           alt="Vesilaskurin logo"
-          className="mr-4 inline-block"
+          className="mr-3 inline-block"
           priority
         />
         Pinsiön alueen vesiosuuskunta
