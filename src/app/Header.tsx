@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Image from 'next/image';
-import pipesImg from '~/images/pipes.png';
+import waterImg from '~/images/water-background.jpg';
 import dropImg from '~/images/water-drop.svg';
 
 export const Header: FC = () => {
@@ -16,16 +16,16 @@ export const Header: FC = () => {
         />
         Pinsiön alueen vesiosuuskunta
       </div>
-      <div className="relative h-[25vh] w-full print:hidden">
+      <div className="relative aspect-[3/1.1] w-full print:hidden sm:aspect-[3/1]">
         <Image
-          src={pipesImg}
-          alt="Putkikuva"
+          src={waterImg}
+          alt=""
           fill={true}
           sizes="(max-width: 672px) 100vw, 672px"
           className="object-cover"
           priority
         />
-        <div className="absolute left-1/2 top-1/4 -translate-x-1/2 text-4xl font-bold text-white">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 bg-white bg-opacity-40 px-2 py-1 text-4xl font-bold text-primary">
           Vesilaskuri
         </div>
       </div>
