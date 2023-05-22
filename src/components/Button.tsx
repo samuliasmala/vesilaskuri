@@ -16,7 +16,7 @@ export const Button: FC<ButtonProps> = ({
     <button
       {...props}
       className={twMerge(
-        'rounded-md bg-primary px-8 py-3 font-bold text-white disabled:opacity-20',
+        'rounded-md bg-primary px-8 py-3 font-semibold text-white disabled:opacity-20',
         className
       )}
     >
