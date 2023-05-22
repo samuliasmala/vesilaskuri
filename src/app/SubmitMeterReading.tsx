@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
@@ -15,10 +15,16 @@ export const SubmitMeterReading: FC = () => {
     searchParams.get('uusi') || ''
   );
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [negativeUsageError, setNegativeUsageError] = useState<string | null>(
+    null
+  );
 
   const previousReading = searchParams.get('edellinen') || '0';
   const previousReadingAsNumber = Number(previousReading.replaceAll(',', '.'));
-  const { error, readingAsNumber } = validateReading(currentReading);
+  const { error: validationError, readingAsNumber } =
+    validateReading(currentReading);
+
+  const error = validationError || negativeUsageError;
 
   // Create invoice url with query parameters holding input data
   const invoiceUrl = getUrl('/lasku', {
@@ -26,6 +32,20 @@ export const SubmitMeterReading: FC = () => {
     uusi: readingAsNumber?.toString() ?? '0',
     viite: searchParams.get('viite') ?? '',
   });
+
+  const validateNegativeUsage = useCallback(
+    () =>
+      setNegativeUsageError(
+        readingAsNumber == null || readingAsNumber - previousReadingAsNumber > 0
+          ? null
+          : 'Nykyisen lukeman oltava edellistä suurempi'
+      ),
+    [previousReadingAsNumber, readingAsNumber]
+  );
+
+  useEffect(() => {
+    if (negativeUsageError) validateNegativeUsage();
+  }, [negativeUsageError, validateNegativeUsage, readingAsNumber]);
 
   return (
     <div className="w-full max-w-xs">
@@ -40,6 +60,7 @@ export const SubmitMeterReading: FC = () => {
           value={currentReading}
           onChange={(event) => setCurrentReading(event.target.value)}
           onKeyDown={(ev) => ev.key === 'Enter' && ev.currentTarget.blur()}
+          onBlur={validateNegativeUsage}
         />
         <M3 />
         <div>
