@@ -15,10 +15,10 @@ export const NavButtons: FC = () => {
 
   return (
     <div className="flex justify-between print:hidden">
-      <Button className="py-1" href={backUrl}>
+      <Button className="px-4 py-2" href={backUrl}>
         Takaisin
       </Button>
-      <Button className="py-1" onClick={() => window.print()}>
+      <Button className="px-4 py-2" onClick={() => window.print()}>
         Tulosta tai tallenna
       </Button>
     </div>

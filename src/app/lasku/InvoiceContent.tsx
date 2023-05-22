@@ -35,7 +35,7 @@ export const Usage: FC<{ prev: number; current: number; usage: number }> = ({
   return (
     <div>
       <H2>Kulutus</H2>
-      <div className="grid max-w-md grid-cols-[minmax(min-content,1fr)_max-content_max-content] items-center gap-1">
+      <div className="grid grid-cols-[minmax(min-content,1fr)_max-content_max-content] items-center gap-1">
         <div>Nykyinen lukema</div>
         <div className="text-right">{max2digits(current)}</div>
         <M3 />
@@ -62,12 +62,10 @@ export const Pricing: FC<{
   return (
     <div>
       <H2>Vesimaksun loppusumma</H2>
-      <div className="grid max-w-md grid-cols-[minmax(min-content,1fr)_max-content_max-content] items-center gap-1">
-        <div className="font-medium">Veden hinta</div>
-        <div className="text-right font-medium">
-          {always2digits(waterPrice)}
-        </div>
-        <div className="font-medium">€</div>
+      <div className="grid grid-cols-[minmax(min-content,1fr)_max-content_max-content] items-center gap-1">
+        <div>Veden hinta</div>
+        <div className="text-right">{always2digits(waterPrice)}</div>
+        <div>€</div>
 
         <div className="col-span-3 indent-5">
           Kulutus: {max2digits(usage)} <M3 />
@@ -77,11 +75,9 @@ export const Pricing: FC<{
           <M3 />
         </div>
 
-        <div className="font-medium">Perusmaksu</div>
-        <div className="text-right font-medium">
-          {always2digits(YEARLY_FEE)}
-        </div>
-        <div className="font-medium">€</div>
+        <div>Perusmaksu</div>
+        <div className="text-right">{always2digits(YEARLY_FEE)}</div>
+        <div>€</div>
 
         <div className="col-span-3 border-t"></div>
 
