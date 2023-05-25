@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactNode, MouseEvent, useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
@@ -9,48 +9,82 @@ import { getUrl } from '~/utils/getUrl';
 import { M3 } from '~/components/M3';
 import { max2digits } from '~/utils/formatters';
 
+type ValidationError =
+  | 'NegativeUsage'
+  | 'MissingReading'
+  | 'NonNumberReading'
+  | 'NonIntegerReading';
+
+const ValidationErrorMessage: Record<ValidationError, string> = {
+  NegativeUsage: 'Nykyisen lukeman oltava edellistä suurempi',
+  MissingReading: 'Nykyinen lukema on pakollinen',
+  NonNumberReading: 'Lukema ei ole kelvollinen numero',
+  NonIntegerReading: 'Voit käyttää vain kokonaisia lukuja',
+} as const;
+
 export const SubmitMeterReading: FC = () => {
   const searchParams = useSearchParams();
   const [currentReading, setCurrentReading] = useState<string>(
     searchParams.get('uusi') || ''
   );
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [negativeUsageError, setNegativeUsageError] = useState<string | null>(
-    null
-  );
+  const [validationError, setValidationError] =
+    useState<ValidationError | null>(null);
 
   const previousReading = searchParams.get('edellinen') || '0';
   const previousReadingAsNumber = Number(previousReading.replaceAll(',', '.'));
-  const { error: validationError, readingAsNumber } =
-    validateReading(currentReading);
+  const { error: readingToIntegerError, readingAsInt } =
+    readingToInteger(currentReading);
 
-  const error = validationError || negativeUsageError;
+  const errorType = readingToIntegerError || validationError;
+  const errorMessage = errorType && ValidationErrorMessage[errorType];
 
   // Create invoice url with query parameters holding input data
   const invoiceUrl = getUrl('/lasku', {
     edellinen: previousReadingAsNumber.toString(),
-    uusi: readingAsNumber?.toString() ?? '0',
+    uusi: readingAsInt?.toString() ?? '0',
     viite: searchParams.get('viite') ?? '',
   });
 
-  const validateNegativeUsage = useCallback(
-    () =>
-      setNegativeUsageError(
-        readingAsNumber == null || readingAsNumber - previousReadingAsNumber > 0
-          ? null
-          : 'Nykyisen lukeman oltava edellistä suurempi'
-      ),
-    [previousReadingAsNumber, readingAsNumber]
-  );
+  const updateReading = (newReading: string) => {
+    setCurrentReading(newReading);
+    const { readingAsInt } = readingToInteger(newReading);
+    if (validationError == 'MissingReading') setValidationError(null);
+    if (validationError == 'NegativeUsage') validateReadingOnBlur(readingAsInt);
+  };
 
-  useEffect(() => {
-    if (negativeUsageError) validateNegativeUsage();
-  }, [negativeUsageError, validateNegativeUsage, readingAsNumber]);
+  const validateReadingOnBlur = (
+    readingAsInt: number | null
+  ): ValidationError | null => {
+    const error =
+      readingAsInt != null && readingAsInt - previousReadingAsNumber <= 0
+        ? 'NegativeUsage'
+        : null;
+    setValidationError(error);
+    return error;
+  };
+
+  const validateReadingOnSubmit = (
+    ev: MouseEvent,
+    readingAsInt: number | null
+  ) => {
+    if (validateReadingOnBlur(readingAsInt) != null) {
+      ev.preventDefault();
+      return;
+    }
+
+    if (readingAsInt == null) {
+      setValidationError('MissingReading');
+      ev.preventDefault();
+      return;
+    }
+    setValidationError(null);
+  };
 
   return (
     <div className="w-full max-w-xs">
       <div className="grid max-w-xs grid-cols-[minmax(min-content,1fr)_max-content_max-content] grid-rows-3 items-center gap-x-1 gap-y-4">
-        <ErrorText>{error}</ErrorText>
+        <ErrorText>{errorMessage}</ErrorText>
         <label htmlFor="currentReading">Nykyinen lukema</label>
         <input
           id="currentReading"
@@ -58,9 +92,9 @@ export const SubmitMeterReading: FC = () => {
           placeholder="0"
           inputMode="numeric"
           value={currentReading}
-          onChange={(event) => setCurrentReading(event.target.value)}
+          onChange={(event) => updateReading(event.target.value)}
           onKeyDown={(ev) => ev.key === 'Enter' && ev.currentTarget.blur()}
-          onBlur={validateNegativeUsage}
+          onBlur={() => validateReadingOnBlur(readingAsInt)}
         />
         <M3 />
         <div>
@@ -89,8 +123,9 @@ export const SubmitMeterReading: FC = () => {
         ) : (
           <Button
             className="w-full p-5"
-            disabled={error != null || readingAsNumber == null}
+            disabled={errorType != null}
             href={invoiceUrl}
+            onClick={(ev) => validateReadingOnSubmit(ev, readingAsInt)}
           >
             Laske kulutus ja muodosta lasku
           </Button>
@@ -122,21 +157,21 @@ const InfoModal: FC<{ closeModal: () => void }> = ({ closeModal }) => {
   );
 };
 
-function validateReading(reading: string): {
-  error: string | null;
-  readingAsNumber: number | null;
+function readingToInteger(reading: string): {
+  error: ValidationError | null;
+  readingAsInt: number | null;
 } {
   const sanitizedReading = reading.trim().replaceAll(',', '.');
-  if (sanitizedReading === '') return { error: null, readingAsNumber: null };
+  if (sanitizedReading === '') return { error: null, readingAsInt: null };
 
   const isReadingValidNumber = /^\d+[.]?\d*$/.test(sanitizedReading);
   if (!isReadingValidNumber)
-    return { error: 'Lukema ei ole kelvollinen numero', readingAsNumber: null };
+    return { error: 'NonNumberReading', readingAsInt: null };
 
-  const readingAsNumber = parseFloat(sanitizedReading);
+  const readingAsInt = parseFloat(sanitizedReading);
 
-  if (!Number.isInteger(readingAsNumber))
-    return { error: 'Voit käyttää vain kokonaisia lukuja', readingAsNumber };
+  if (!Number.isInteger(readingAsInt))
+    return { error: 'NonIntegerReading', readingAsInt };
 
-  return { error: null, readingAsNumber };
+  return { error: null, readingAsInt };
 }
