@@ -18,7 +18,12 @@ export const NavButtons: FC = () => {
       <Button className="px-4 py-2" href={backUrl}>
         Takaisin
       </Button>
-      <Button className="px-4 py-2" onClick={() => window.print()}>
+      <Button
+        className="px-4 py-2"
+        onClick={() => {
+          window.print();
+        }}
+      >
         Tulosta tai tallenna
       </Button>
     </div>
