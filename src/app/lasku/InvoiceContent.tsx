@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { H2 } from '~/components/Typography';
 import { M3 } from '~/components/M3';
-import { WATER_EUR_PER_M3, YEARLY_FEE } from '~/constants';
+import { VAT, WATER_EUR_PER_M3, YEARLY_FEE } from '~/constants';
 import { InvoiceDetails } from './InvoiceDetails';
 import { always2digits, max2digits } from '~/utils/formatters';
 
@@ -86,7 +86,7 @@ export const Pricing: FC<{
         <div className="font-bold">€</div>
 
         <div className="col-span-2 text-right">
-          (sis. alv {always2digits(totalPrice * (0.24 / 1.24))}
+          (sis. alv {always2digits(totalPrice * (VAT / (100 + VAT)))}
         </div>
         <div>€)</div>
       </div>
